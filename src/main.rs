@@ -119,7 +119,12 @@ async fn root() -> Markup {
                     div class="w-75" {
                         h1 class="text-warning-emphasis" { "🎬 Gluon Open Movie Database" }
                         div class="htmx-indicator" { p class="text-success-emphasis" { "searching..." } }
-                        form class="form" hx-get="/search" hx-target="#results" hx-trigger="input changed delay:500ms, search" hx-indicator=".htmx-indicator" {
+                        form
+                            class="form"
+                            hx-get="/search"
+                            hx-target="#results"
+                            hx-trigger="input changed delay:500ms, search"
+                            hx-indicator=".htmx-indicator" {
                             input hx-get=(random_search()) hx-target="#results" hx-trigger="load" type="hidden";
                             div class="container" {
                                 div class="row" {
