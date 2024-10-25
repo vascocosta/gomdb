@@ -1,0 +1,13 @@
+[package]
+name = "gomdb"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7.7"
+maud = { version = "0.26.0", features = ["axum"] }
+rand = "0.8.5"
+reqwest = { version = "0.12.8", features = ["json"] }
+serde = { version = "1.0.210", features = ["derive"] }
+serde_json = "1.0.132"
+tokio = { version = "1.40.0", features = ["full"] }
