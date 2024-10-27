@@ -1,26 +1,13 @@
 use rand::seq::SliceRandom;
 use rand::thread_rng;
+use std::fs::read_to_string;
+
+const RANDOM_TITLES_FILE: &str = "random_titles.txt";
 
 pub(crate) fn random_search() -> String {
     let mut rng = thread_rng();
-    let titles = [
-        "Shogun",
-        "Fallout",
-        "The Penguin",
-        "The Gentlemen",
-        "Ripley",
-        "The Tattooist of Auschwitz",
-        "Dark Matter",
-        "3 Body Problem",
-        "Sugar",
-        "Masters of the Air",
-        "The Brothers Sun",
-        "The Walking Dead: The Ones Who Live",
-        "WondLa",
-        "Those About to Die",
-        "The Edge of Sleep",
-        "Griselda",
-    ];
+    let file_contents = read_to_string(RANDOM_TITLES_FILE).unwrap_or(String::new());
+    let titles: Vec<&str> = file_contents.split("\n").collect();
 
     format!(
         "/search?search={}&y=2024",
