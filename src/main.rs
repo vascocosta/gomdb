@@ -79,8 +79,10 @@ async fn omdb(search: &str, year: Option<&String>) -> Result<Markup> {
             }
         }
         p class="pt-4 fs-4 text-secondary-emphasis" { (omdb.plot) }
-        a href=(url) target="_blank" { img height="32" width="32" src="https://www.gluonspace.com/files/imdb.png"; }
-        a href=(url) target="_blank" { (url) }
+        a href=(url) target="_blank" {
+            img height="32" width="32" src="https://www.gluonspace.com/files/imdb.png" style="margin-right: 5px;";
+            (url)
+        }
     })
 }
 
