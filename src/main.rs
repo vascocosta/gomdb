@@ -138,7 +138,7 @@ async fn root() -> Markup {
                                 }
                             }
                         }
-                        div id="results" { }
+                        div id="results" {}
                     }
                 }
                 script
