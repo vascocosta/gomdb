@@ -1,3 +1,4 @@
+use anyhow::{Context, Result};
 use axum::{extract::Query, routing::get, Router};
 use maud::{html, Markup, DOCTYPE};
 use models::OmDb;
@@ -14,27 +15,27 @@ const ADDRESS: &str = "0.0.0.0:3000";
 const OMDB_API_URL: &str = "https://www.omdbapi.com/";
 const TIMEOUT: u64 = 10;
 
-async fn omdb(search: &str, year: Option<&String>) -> Option<Markup> {
+async fn omdb(search: &str, year: Option<&String>) -> Result<Markup> {
     let omdb: OmDb = tokio::time::timeout(
         Duration::from_secs(TIMEOUT),
         reqwest::get(format!(
             "{}/?apikey={}&t={}&plot=full&y={}",
             OMDB_API_URL,
-            env::var("OMDB_KEY").ok()?,
+            env::var("OMDB_KEY")?,
             search,
             year.unwrap_or(&String::new())
         )),
     )
     .await
-    .ok()?
-    .ok()?
+    .context("Timeout while fetching data")?
+    .context("Could not connect to server")?
     .json()
     .await
-    .ok()?;
+    .context("Could not decode data")?;
 
     let url = format!("https://www.imdb.com/title/{}", omdb.imdb_id);
 
-    Some(html! {
+    Ok(html! {
         ul class="pt-4 list-group list-group-flush" {
             li class="list-group-item text-primary-emphasis" {
                 span class="text-warning-emphasis" { "Title: " }
@@ -89,9 +90,9 @@ async fn search(Query(params): Query<HashMap<String, String>>) -> Markup {
     )
     .await
     {
-        Some(markup) => markup,
-        None => html! {
-            p class="text-danger-emphasis" { "Error fetching data..." }
+        Ok(markup) => markup,
+        Err(error) => html! {
+            p class="text-danger-emphasis" { "Error: "(error) }
         },
     }
 }

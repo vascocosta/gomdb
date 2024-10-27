@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+anyhow = "1.0.91"
 axum = "0.7.7"
 maud = { version = "0.26.0", features = ["axum"] }
 rand = "0.8.5"
