@@ -58,10 +58,6 @@ async fn omdb(search: &str, year: Option<&String>) -> Result<Markup> {
                 span class="text-primary-emphasis" { (omdb.actors) }
             }
             li class="list-group-item text-primary-emphasis" {
-                span class="text-warning-emphasis" {  "IMDB Rating: " }
-                span class="text-primary-emphasis" { (omdb.imdb_rating) }
-            }
-            li class="list-group-item text-primary-emphasis" {
                 span class="text-warning-emphasis" { "Runtime: " }
                 span class="text-primary-emphasis" { (omdb.runtime) }
             }
@@ -72,6 +68,10 @@ async fn omdb(search: &str, year: Option<&String>) -> Result<Markup> {
             li class="list-group-item text-primary-emphasis" {
                 span class="text-warning-emphasis" { "Language: " }
                 span class="text-primary-emphasis" { (omdb.language) }
+            }
+            li class="list-group-item text-primary-emphasis" {
+                span class="text-warning-emphasis" {  "IMDB Rating: " }
+                span class="text-primary-emphasis" { (omdb.imdb_rating) }
             }
             li class="list-group-item text-primary-emphasis" {
                 span class="text-warning-emphasis" { "Awards: " }
