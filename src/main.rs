@@ -124,7 +124,7 @@ async fn root() -> Markup {
                         h1 class="text-warning-emphasis" { "🎬 Gluon Open Movie Database" }
                         div class="htmx-indicator" { p class="text-success-emphasis" { "searching..." } }
                         form
-                            class="form"
+                            class="form border border-primary"
                             hx-get="/search"
                             hx-target="#results"
                             hx-trigger="input changed delay:500ms, search"
