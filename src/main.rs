@@ -15,6 +15,8 @@ mod utils;
 const ADDRESS: &str = "0.0.0.0:3000";
 const OMDB_API_URL: &str = "https://www.omdbapi.com/";
 const TIMEOUT: u64 = 10;
+const TITLE: &str = "GOMDb";
+const HEADER: &str = "🎬 Gluon Open Movie Database";
 
 async fn omdb(search: &str, year: Option<&String>) -> Result<Markup> {
     let omdb: OmDb = tokio::time::timeout(
@@ -117,12 +119,12 @@ async fn root() -> Markup {
                     src="https://unpkg.com/htmx.org@2.0.3"
                     integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
                     crossorigin="anonymous" {}
-                title { "GOMDb" }
+                title { (TITLE) }
             }
             body class="bg-secondary-subtle" {
                 div class="container d-flex justify-content-center mt-5" {
                     div class="w-75" {
-                        h1 class="text-warning-emphasis" { "🎬 Gluon Open Movie Database" }
+                        h1 class="text-warning-emphasis" { (HEADER) }
                         div class="htmx-indicator" { p class="text-success-emphasis" { "searching..." } }
                         form
                             class="form"
