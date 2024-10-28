@@ -41,5 +41,5 @@ cargo build --release
 Finally you can run the app with:
 
 ```
-./target/release/gomdb &
+OMDB_KEY="YOUR_OMDB_API_KEY" ./target/release/gomdb &
 ```
