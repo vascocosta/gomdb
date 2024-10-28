@@ -6,6 +6,7 @@ use std::collections::HashMap;
 use std::env;
 use std::io;
 use std::time::Duration;
+use tower_http::services::ServeDir;
 use utils::random_search;
 
 mod models;
@@ -80,7 +81,7 @@ async fn omdb(search: &str, year: Option<&String>) -> Result<Markup> {
         }
         p class="pt-4 fs-4 text-secondary-emphasis" { (omdb.plot) }
         a href=(url) target="_blank" {
-            img height="32" width="32" src="https://www.gluonspace.com/files/imdb.png" style="margin-right: 5px;";
+            img height="32" width="32" src="/static/assets/imdb.png" style="margin-right: 5px;";
             (url)
         }
     })
@@ -157,7 +158,8 @@ async fn root() -> Markup {
 async fn main() -> io::Result<()> {
     let app = Router::new()
         .route("/", get(root))
-        .route("/search", get(search));
+        .route("/search", get(search))
+        .nest_service("/static", ServeDir::new("./static"));
 
     let listener = tokio::net::TcpListener::bind(ADDRESS).await?;
     axum::serve(listener, app).await?;
