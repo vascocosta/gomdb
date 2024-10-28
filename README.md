@@ -8,6 +8,10 @@ This project was mostly intended as a simple showcase of how to implement a mini
 * [axum](https://github.com/tokio-rs/axum)
 * [maud](https://maud.lambda.xyz/)
 
+Check my own instance here:
+
+[https://gomdb.gluonspace.com/](https://gomdb.gluonspace.com/)
+
 ## Screenshots
 
 ![Main](https://i.imgur.com/SJN6C92.png)
