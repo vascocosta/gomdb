@@ -5,13 +5,26 @@ use std::fs::read_to_string;
 const DEFAULT_TITLE: &str = "Shogun";
 const RANDOM_TITLES_FILE: &str = "random_titles.txt";
 
+fn read_titles(file_contents: &str) -> Vec<&str> {
+    file_contents
+        .lines()
+        .filter_map(|line| {
+            let trimmed = line.trim();
+            if trimmed.is_empty() {
+                None
+            } else {
+                Some(trimmed)
+            }
+        })
+        .collect()
+}
+
 pub(crate) fn random_search() -> String {
-    let mut rng = thread_rng();
-    let file_contents = read_to_string(RANDOM_TITLES_FILE).unwrap_or(String::from(DEFAULT_TITLE));
-    let titles: Vec<&str> = file_contents.split("\n").collect();
+    let file_contents = read_to_string(RANDOM_TITLES_FILE).unwrap_or_default();
+    let titles = read_titles(&file_contents);
 
     format!(
-        "/search?search={}&y=2024",
-        titles.choose(&mut rng).unwrap_or(&DEFAULT_TITLE)
+        "/search?search={}",
+        titles.choose(&mut thread_rng()).unwrap_or(&DEFAULT_TITLE)
     )
 }
