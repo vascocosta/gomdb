@@ -4,7 +4,6 @@ use maud::{html, Markup, DOCTYPE};
 use models::OmDb;
 use std::collections::HashMap;
 use std::env;
-use std::io;
 use std::time::Duration;
 use tower_http::services::ServeDir;
 use utils::random_search;
@@ -157,14 +156,18 @@ async fn root() -> Markup {
 }
 
 #[tokio::main]
-async fn main() -> io::Result<()> {
+async fn main() -> Result<()> {
     let app = Router::new()
         .route("/", get(root))
         .route("/search", get(search))
         .nest_service("/static", ServeDir::new("./static"));
 
-    let listener = tokio::net::TcpListener::bind(ADDRESS).await?;
-    axum::serve(listener, app).await?;
+    let listener = tokio::net::TcpListener::bind(ADDRESS)
+        .await
+        .context(format!("Could not bind to {}", ADDRESS))?;
+    axum::serve(listener, app)
+        .await
+        .context("Could not start server")?;
 
     Ok(())
 }
